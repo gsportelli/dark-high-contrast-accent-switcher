@@ -129,13 +129,16 @@ function activate(context) {
           ? vscode.ConfigurationTarget.Workspace
           : vscode.ConfigurationTarget.Global;
 
+        if (configTarget === vscode.ConfigurationTarget.Workspace) {
+        await config.update('workbench.colorCustomizations', undefined, vscode.ConfigurationTarget.Global);
+        }
+
         await applyAccent(ACCENTS[selection.label], configTarget);
 
         vscode.window.showInformationMessage(
           `Applied "${selection.label}" accent to ${configTarget === vscode.ConfigurationTarget.Workspace ? 'workspace' : 'user'} settings.`
         );
       });
-
 
       // Cancel
       picker.onDidHide(async () => {
@@ -175,7 +178,6 @@ function activate(context) {
   context.subscriptions.push(chooseAccent);
   context.subscriptions.push(reset);
 }
-
 
 function deactivate() {}
 
