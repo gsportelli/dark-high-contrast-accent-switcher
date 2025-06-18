@@ -3,13 +3,10 @@
   "displayName": "Dark High Contrast Accent Switcher",
   "description": "Switch accent borders and focus colors for the Default High Contrast Dark theme.",
   "version": "0.0.1",
-  "publisher": "Giancarlo Sportelli",
+  "publisher": "gsportelli",
   "engines": {
     "vscode": "^1.101.0"
   },
-  "categories": [
-    "Other"
-  ],
   "activationEvents": [
     "onCommand:darkHighContrastAccentSwitcher.chooseAccent"
   ],
@@ -30,6 +27,20 @@
     "url": "https://github.com/gsportelli/dark-high-contrast-accent-switcher/issues"
   },
   "homepage": "https://github.com/gsportelli/dark-high-contrast-accent-switcher#readme",
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "keywords": [
+    "accent",
+    "borders",
+    "high contrast",
+    "color",
+    "theme",
+    "dark",
+    "switcher"
+  ],
+  "icon": "icon.png",
   "dependencies": {},
   "scripts": {
     "vscode:prepublish": "npm run compile",
