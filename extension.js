@@ -64,7 +64,7 @@ const ACCENTS = {
 };
 
 async function applyAccent(accent, configTarget) {
-  const themeName = "Default High Contrast Dark";
+  const themeName = "Default High Contrast";
   await vscode.workspace.getConfiguration().update(
     'workbench.colorTheme',
     themeName,
@@ -84,36 +84,98 @@ async function applyAccent(accent, configTarget) {
 }
 
 function activate(context) {
-  const disposable = vscode.commands.registerCommand(
+
+  const chooseAccent = vscode.commands.registerCommand(
     'darkHighContrastAccentSwitcher.chooseAccent',
     async () => {
-      const pick = await vscode.window.showQuickPick(Object.keys(ACCENTS), {
-        placeHolder: 'Select an accent color'
+      const config = vscode.workspace.getConfiguration();
+      const originalColors = config.get('workbench.colorCustomizations') || {};
+
+      const previewTarget = vscode.ConfigurationTarget.Global; // preview always at user level (safe)
+
+      const picker = vscode.window.createQuickPick();
+      picker.items = Object.keys(ACCENTS).map(label => ({ label }));
+      picker.placeholder = 'Scroll to preview. Press Enter to apply, Esc to cancel.';
+      picker.canSelectMany = false;
+
+      // Live preview
+      picker.onDidChangeActive(async ([selected]) => {
+        if (selected) {
+          const accent = ACCENTS[selected.label];
+          await applyAccent(accent, previewTarget);
+        }
       });
 
-      if (!pick) return;
+      // Confirm + scope prompt
+      picker.onDidAccept(async () => {
+        const selection = picker.selectedItems[0];
+        picker.hide();
+        if (!selection) return;
 
-      const scope = await vscode.window.showQuickPick(
-        ['Workspace', 'User'],
-        { placeHolder: 'Apply accent to:' }
-      );
+        const hasWorkspace = vscode.workspace.workspaceFile || vscode.workspace.workspaceFolders?.length > 0;
 
+        const scopePick = await vscode.window.showQuickPick(
+          hasWorkspace ? ['Workspace', 'User'] : ['User'],
+          {
+            placeHolder: hasWorkspace
+              ? 'Apply accent to:'
+              : 'Only user-level settings are available (no workspace open)'
+          }
+        );
+
+        if (!scopePick) return;
+
+        const configTarget = scopePick === 'Workspace'
+          ? vscode.ConfigurationTarget.Workspace
+          : vscode.ConfigurationTarget.Global;
+
+        await applyAccent(ACCENTS[selection.label], configTarget);
+
+        vscode.window.showInformationMessage(
+          `Applied "${selection.label}" accent to ${configTarget === vscode.ConfigurationTarget.Workspace ? 'workspace' : 'user'} settings.`
+        );
+      });
+
+
+      // Cancel
+      picker.onDidHide(async () => {
+        if (!picker.selectedItems.length) {
+          await config.update('workbench.colorCustomizations', originalColors, previewTarget);
+          vscode.window.showInformationMessage(`Accent selection cancelled, original settings restored.`);
+        }
+        picker.dispose();
+      });
+
+      picker.show();
+    }
+  );
+
+  const reset = vscode.commands.registerCommand(
+    'darkHighContrastAccentSwitcher.resetAccent',
+    async () => {
+      const config = vscode.workspace.getConfiguration();
+      const scope = await vscode.window.showQuickPick(['Workspace', 'User'], {
+        placeHolder: 'Reset for:'
+      });
       if (!scope) return;
 
       const configTarget = scope === 'Workspace'
         ? vscode.ConfigurationTarget.Workspace
         : vscode.ConfigurationTarget.Global;
 
-      await applyAccent(ACCENTS[pick], configTarget);
+      await config.update('workbench.colorCustomizations', {}, configTarget);
+      await config.update('workbench.colorTheme', 'Default High Contrast', configTarget);
 
       vscode.window.showInformationMessage(
-        `Applied "${pick}" accent to ${scope.toLowerCase()} settings and set theme to Dark High Contrast.`
+        `Reset accent and restored theme to Default High Contrast (${scope.toLowerCase()} scope).`
       );
     }
   );
 
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(chooseAccent);
+  context.subscriptions.push(reset);
 }
+
 
 function deactivate() {}
 
