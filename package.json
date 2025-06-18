@@ -2,7 +2,7 @@
   "name": "dark-high-contrast-accent-switcher",
   "displayName": "Dark High Contrast Accent Switcher",
   "description": "Switch accent borders and focus colors for the Default High Contrast Dark theme.",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "publisher": "gsportelli",
   "engines": {
     "vscode": "^1.101.0"

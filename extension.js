@@ -85,13 +85,19 @@ async function applyAccent(accent, configTarget) {
 
 function activate(context) {
 
+  const hasWorkspace = vscode.workspace.workspaceFile || vscode.workspace.workspaceFolders?.length > 0;
   const chooseAccent = vscode.commands.registerCommand(
     'darkHighContrastAccentSwitcher.chooseAccent',
     async () => {
       const config = vscode.workspace.getConfiguration();
-      const originalColors = config.get('workbench.colorCustomizations') || {};
-
-      const previewTarget = vscode.ConfigurationTarget.Global; // preview always at user level (safe)
+      const originalGlobalColors = config.get('workbench.colorCustomizations', vscode.ConfigurationTarget.Global) || {};
+      const originalWorkspaceColors = config.get('workbench.colorCustomizations', vscode.ConfigurationTarget.Workspace) || {};
+      let previewTarget;
+      if (hasWorkspace) {
+        previewTarget = vscode.ConfigurationTarget.Workspace; // preview at workspace level if available
+      } else {
+        previewTarget = vscode.ConfigurationTarget.Global; // preview always at user level
+      }
 
       const picker = vscode.window.createQuickPick();
       picker.items = Object.keys(ACCENTS).map(label => ({ label }));
@@ -112,8 +118,6 @@ function activate(context) {
         picker.hide();
         if (!selection) return;
 
-        const hasWorkspace = vscode.workspace.workspaceFile || vscode.workspace.workspaceFolders?.length > 0;
-
         const scopePick = await vscode.window.showQuickPick(
           hasWorkspace ? ['Workspace', 'User'] : ['User'],
           {
@@ -123,7 +127,12 @@ function activate(context) {
           }
         );
 
-        if (!scopePick) return;
+        if (!scopePick) {
+          await config.update('workbench.colorCustomizations', originalGlobalColors, vscode.ConfigurationTarget.Global);
+          if (hasWorkspace) await config.update('workbench.colorCustomizations', originalWorkspaceColors, vscode.ConfigurationTarget.Workspace);
+          vscode.window.showInformationMessage(`Accent selection cancelled, original settings restored.`);
+          return;
+        };
 
         const configTarget = scopePick === 'Workspace'
           ? vscode.ConfigurationTarget.Workspace
@@ -143,7 +152,8 @@ function activate(context) {
       // Cancel
       picker.onDidHide(async () => {
         if (!picker.selectedItems.length) {
-          await config.update('workbench.colorCustomizations', originalColors, previewTarget);
+          await config.update('workbench.colorCustomizations', originalGlobalColors, vscode.ConfigurationTarget.Global);
+          if (hasWorkspace) await config.update('workbench.colorCustomizations', originalWorkspaceColors, vscode.ConfigurationTarget.Workspace);
           vscode.window.showInformationMessage(`Accent selection cancelled, original settings restored.`);
         }
         picker.dispose();
@@ -157,9 +167,16 @@ function activate(context) {
     'darkHighContrastAccentSwitcher.resetAccent',
     async () => {
       const config = vscode.workspace.getConfiguration();
-      const scope = await vscode.window.showQuickPick(['Workspace', 'User'], {
-        placeHolder: 'Reset for:'
-      });
+
+      const scope = await vscode.window.showQuickPick(
+        hasWorkspace ? ['Workspace', 'User'] : ['User'],
+        {
+          placeHolder: hasWorkspace
+            ? 'Apply accent to:'
+            : 'Only user-level settings are available (no workspace open)'
+        }
+      );
+
       if (!scope) return;
 
       const configTarget = scope === 'Workspace'
