@@ -199,7 +199,7 @@ function activate(context) {
         if (!scopePick) {
           await config.update('workbench.colorCustomizations', originalGlobalColors, vscode.ConfigurationTarget.Global);
           if (hasWorkspace) await config.update('workbench.colorCustomizations', originalWorkspaceColors, vscode.ConfigurationTarget.Workspace);
-          vscode.window.showInformationMessage(`Accent selection cancelled, original settings restored.`);
+        //   vscode.window.showInformationMessage(`Accent selection cancelled, original settings restored.`);
           return;
         };
 
@@ -213,9 +213,9 @@ function activate(context) {
 
         await applyAccent(ACCENTS[selection.label], configTarget);
 
-        vscode.window.showInformationMessage(
-          `Applied "${selection.label}" accent to ${configTarget === vscode.ConfigurationTarget.Workspace ? 'workspace' : 'user'} settings.`
-        );
+        // vscode.window.showInformationMessage(
+        //   `Applied "${selection.label}" accent to ${configTarget === vscode.ConfigurationTarget.Workspace ? 'workspace' : 'user'} settings.`
+        // );
       });
 
       // Cancel
@@ -223,7 +223,7 @@ function activate(context) {
         if (!picker.selectedItems.length) {
           await config.update('workbench.colorCustomizations', originalGlobalColors, vscode.ConfigurationTarget.Global);
           if (hasWorkspace) await config.update('workbench.colorCustomizations', originalWorkspaceColors, vscode.ConfigurationTarget.Workspace);
-          vscode.window.showInformationMessage(`Accent selection cancelled, original settings restored.`);
+        //   vscode.window.showInformationMessage(`Accent selection cancelled, original settings restored.`);
         }
         picker.dispose();
       });
@@ -255,9 +255,9 @@ function activate(context) {
       await config.update('workbench.colorCustomizations', {}, configTarget);
       await config.update('workbench.colorTheme', 'Default High Contrast', configTarget);
 
-      vscode.window.showInformationMessage(
-        `Reset accent and restored theme to Default High Contrast (${scope.toLowerCase()} scope).`
-      );
+    //   vscode.window.showInformationMessage(
+    //     `Reset accent and restored theme to Default High Contrast (${scope.toLowerCase()} scope).`
+    //   );
     }
   );
 
