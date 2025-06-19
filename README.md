@@ -38,22 +38,22 @@ Below are previews of some accents in action using the **Dark High Contrast** th
 ### Full Accent List
 
 - Emerald Green
-- Fuchsia Pink
-- Tangerine Orange
-- Azure Blue
-- Lavender Purple
-- Crimson Red
-- Teal Blue
-- Golden Yellow
-- Lime Green
-- Cool Gray
 - Laser Lime
+- Fuchsia Pink
 - Bubblegum Pink
+- Azure Blue
 - Electric Blue
-- Tangerine Flash
+- Tangerine Orange
+- Neon Tangerine
+- Lavender Purple
 - Cyber Grape
+- Golden Yellow
 - Strobe Yellow
+- Teal Blue
 - Cyan Beam
-- Hot Magenta
+- Lime Green
 - Cyber Mint
+- Crimson Red
 - Laser Red
+- Cool Gray
+- Hot Magenta

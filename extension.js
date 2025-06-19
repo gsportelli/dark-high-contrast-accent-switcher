@@ -1,134 +1,135 @@
 const vscode = require('vscode');
 
-const PLAIN_ACCENTS = {
+const ACCENTS = {
   "Emerald Green": {
     contrastBorder: "#00C853",
     sideBarBorder: "#00C853",
-    focusBorder: "#FFAB00",
-    notebookCellBorderColor: "#33691E"
+    focusBorder: "#FFD600",
+    notebookCellBorderColor: "#2E7D32"
   },
+  "Laser Lime": {
+    contrastBorder: "#C6FF00",
+    sideBarBorder: "#C6FF00",
+    focusBorder: "#FF2BB5",
+    notebookCellBorderColor: "#76FF03"
+  },
+
   "Fuchsia Pink": {
     contrastBorder: "#EC407A",
     sideBarBorder: "#EC407A",
-    focusBorder: "#00BFA5",
+    focusBorder: "#00E5FF",
     notebookCellBorderColor: "#6A1B4D"
   },
-  "Tangerine Orange": {
-    contrastBorder: "#FF7043",
-    sideBarBorder: "#FF7043",
-    focusBorder: "#448AFF",
-    notebookCellBorderColor: "#BF360C"
+  "Bubblegum Pink": {
+    contrastBorder: "#FF5EDB",
+    sideBarBorder: "#FF5EDB",
+    focusBorder: "#00FFE0",
+    notebookCellBorderColor: "#D81B60"
   },
+
   "Azure Blue": {
     contrastBorder: "#448AFF",
     sideBarBorder: "#448AFF",
     focusBorder: "#FF4081",
     notebookCellBorderColor: "#0D47A1"
   },
+  "Electric Blue": {
+    contrastBorder: "#00BFFF",
+    sideBarBorder: "#00BFFF",
+    focusBorder: "#FFF176",
+    notebookCellBorderColor: "#1A74D4"
+  },
+
+  "Tangerine Orange": {
+    contrastBorder: "#FF7043",
+    sideBarBorder: "#FF7043",
+    focusBorder: "#29B6F6",
+    notebookCellBorderColor: "#E65100"
+  },
+  "Neon Tangerine": {
+    contrastBorder: "#FF9900",
+    sideBarBorder: "#FF9900",
+    focusBorder: "#00CFFF",
+    notebookCellBorderColor: "#FF6A00"
+  },
+
   "Lavender Purple": {
     contrastBorder: "#B388FF",
     sideBarBorder: "#B388FF",
-    focusBorder: "#76FF03",
-    notebookCellBorderColor: "#4A148C"
-  },
-  "Crimson Red": {
-    contrastBorder: "#E53935",
-    sideBarBorder: "#E53935",
-    focusBorder: "#00E5FF",
-    notebookCellBorderColor: "#B71C1C"
-  },
-  "Teal Blue": {
-    contrastBorder: "#00ACC1",
-    sideBarBorder: "#00ACC1",
-    focusBorder: "#FF7043",
-    notebookCellBorderColor: "#004D40"
-  },
-  "Golden Yellow": {
-    contrastBorder: "#FDD835",
-    sideBarBorder: "#FDD835",
-    focusBorder: "#00B2FF",
-    notebookCellBorderColor: "#827717"
-  },
-  "Lime Green": {
-    contrastBorder: "#AEEA00",
-    sideBarBorder: "#AEEA00",
-    focusBorder: "#FF3DAC",
-    notebookCellBorderColor: "#558B2F"
-  },
-  "Cool Gray": {
-    contrastBorder: "#90A4AE",
-    sideBarBorder: "#90A4AE",
-    focusBorder: "#FFC107",
-    notebookCellBorderColor: "#37474F"
-  }
-};
-
-const NEON_ACCENTS = {
-  "Laser Lime": {
-    contrastBorder: "#BFFF00",
-    sideBarBorder: "#BFFF00",
-    focusBorder: "#FF1EC8",
-    notebookCellBorderColor: "#70FF00"
-  },
-  "Bubblegum Pink": {
-    contrastBorder: "#FF4EC2",
-    sideBarBorder: "#FF4EC2",
-    focusBorder: "#00FFD5",
-    notebookCellBorderColor: "#D600A0"
-  },
-  "Electric Blue": {
-    contrastBorder: "#00FFFF",
-    sideBarBorder: "#00FFFF",
-    focusBorder: "#FFEA00",
-    notebookCellBorderColor: "#0080FF"
-  },
-  "Tangerine Flash": {
-    contrastBorder: "#FFA500",
-    sideBarBorder: "#FFA500",
-    focusBorder: "#00B2FF",
-    notebookCellBorderColor: "#FF6A00"
+    focusBorder: "#64FFDA",
+    notebookCellBorderColor: "#6A1B9A"
   },
   "Cyber Grape": {
     contrastBorder: "#C724B1",
     sideBarBorder: "#C724B1",
-    focusBorder: "#39FF14",
-    notebookCellBorderColor: "#7A1C9E"
+    focusBorder: "#CCFF00",
+    notebookCellBorderColor: "#8E24AA"
+  },
+
+  "Golden Yellow": {
+    contrastBorder: "#FDD835",
+    sideBarBorder: "#FDD835",
+    focusBorder: "#00BCD4",
+    notebookCellBorderColor: "#F57F17"
   },
   "Strobe Yellow": {
     contrastBorder: "#FFFF33",
     sideBarBorder: "#FFFF33",
-    focusBorder: "#00F6FF",
-    notebookCellBorderColor: "#CCCC00"
+    focusBorder: "#00E8FF",
+    notebookCellBorderColor: "#FFD600"
+  },
+
+  "Teal Blue": {
+    contrastBorder: "#00ACC1",
+    sideBarBorder: "#00ACC1",
+    focusBorder: "#FF7043",
+    notebookCellBorderColor: "#006064"
   },
   "Cyan Beam": {
-    contrastBorder: "#00F0FF",
-    sideBarBorder: "#00F0FF",
-    focusBorder: "#FF1493",
-    notebookCellBorderColor: "#0099CC"
+    contrastBorder: "#00F7FF",
+    sideBarBorder: "#00F7FF",
+    focusBorder: "#FF3DAC",
+    notebookCellBorderColor: "#00ACC1"
+  },
+
+  "Lime Green": {
+    contrastBorder: "#AEEA00",
+    sideBarBorder: "#AEEA00",
+    focusBorder: "#FF3DAB",
+    notebookCellBorderColor: "#7CB342"
+  },
+  "Cyber Mint": {
+    contrastBorder: "#3EFFDC",
+    sideBarBorder: "#3EFFDC",
+    focusBorder: "#FFA000",
+    notebookCellBorderColor: "#00CFAE"
+  },
+
+  "Crimson Red": {
+    contrastBorder: "#8B0000", // much darker red
+    sideBarBorder: "#8B0000",
+    focusBorder: "#00E5FF",
+    notebookCellBorderColor: "#5A0000"
+  },
+  "Laser Red": {
+    contrastBorder: "#FF1A1A", // bright neon scarlet
+    sideBarBorder: "#FF1A1A",
+    focusBorder: "#00FFFF",
+    notebookCellBorderColor: "#FF003C"
+  },
+
+  "Cool Gray": {
+    contrastBorder: "#90A4AE",
+    sideBarBorder: "#90A4AE",
+    focusBorder: "#FFC107",
+    notebookCellBorderColor: "#455A64"
   },
   "Hot Magenta": {
     contrastBorder: "#FF1EFF",
     sideBarBorder: "#FF1EFF",
     focusBorder: "#00FF87",
     notebookCellBorderColor: "#C600C6"
-  },
-  "Cyber Mint": {
-    contrastBorder: "#3EFFDC",
-    sideBarBorder: "#3EFFDC",
-    focusBorder: "#FF9E00",
-    notebookCellBorderColor: "#00CCAA"
-  },
-  "Laser Red": {
-    contrastBorder: "#FF073A",
-    sideBarBorder: "#FF073A",
-    focusBorder: "#00FFFF",
-    notebookCellBorderColor: "#C10029"
   }
-};
-
-const ACCENTS = {
-  ...PLAIN_ACCENTS,
-  ...NEON_ACCENTS
 };
 
 async function applyAccent(accent, configTarget) {
