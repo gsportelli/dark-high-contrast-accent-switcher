@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 
-const ACCENTS = {
+const PLAIN_ACCENTS = {
   "Emerald Green": {
     contrastBorder: "#00C853",
     sideBarBorder: "#00C853",
@@ -46,13 +46,13 @@ const ACCENTS = {
   "Golden Yellow": {
     contrastBorder: "#FDD835",
     sideBarBorder: "#FDD835",
-    focusBorder: "#6A1B9A",
+    focusBorder: "#00B2FF",
     notebookCellBorderColor: "#827717"
   },
   "Lime Green": {
     contrastBorder: "#AEEA00",
     sideBarBorder: "#AEEA00",
-    focusBorder: "#7C4DFF",
+    focusBorder: "#FF3DAC",
     notebookCellBorderColor: "#558B2F"
   },
   "Cool Gray": {
@@ -61,6 +61,74 @@ const ACCENTS = {
     focusBorder: "#FFC107",
     notebookCellBorderColor: "#37474F"
   }
+};
+
+const NEON_ACCENTS = {
+  "Laser Lime": {
+    contrastBorder: "#BFFF00",
+    sideBarBorder: "#BFFF00",
+    focusBorder: "#FF1EC8",
+    notebookCellBorderColor: "#70FF00"
+  },
+  "Bubblegum Pink": {
+    contrastBorder: "#FF4EC2",
+    sideBarBorder: "#FF4EC2",
+    focusBorder: "#00FFD5",
+    notebookCellBorderColor: "#D600A0"
+  },
+  "Electric Blue": {
+    contrastBorder: "#00FFFF",
+    sideBarBorder: "#00FFFF",
+    focusBorder: "#FFEA00",
+    notebookCellBorderColor: "#0080FF"
+  },
+  "Tangerine Flash": {
+    contrastBorder: "#FFA500",
+    sideBarBorder: "#FFA500",
+    focusBorder: "#00B2FF",
+    notebookCellBorderColor: "#FF6A00"
+  },
+  "Cyber Grape": {
+    contrastBorder: "#C724B1",
+    sideBarBorder: "#C724B1",
+    focusBorder: "#39FF14",
+    notebookCellBorderColor: "#7A1C9E"
+  },
+  "Strobe Yellow": {
+    contrastBorder: "#FFFF33",
+    sideBarBorder: "#FFFF33",
+    focusBorder: "#00F6FF",
+    notebookCellBorderColor: "#CCCC00"
+  },
+  "Cyan Beam": {
+    contrastBorder: "#00F0FF",
+    sideBarBorder: "#00F0FF",
+    focusBorder: "#FF1493",
+    notebookCellBorderColor: "#0099CC"
+  },
+  "Hot Magenta": {
+    contrastBorder: "#FF1EFF",
+    sideBarBorder: "#FF1EFF",
+    focusBorder: "#00FF87",
+    notebookCellBorderColor: "#C600C6"
+  },
+  "Cyber Mint": {
+    contrastBorder: "#3EFFDC",
+    sideBarBorder: "#3EFFDC",
+    focusBorder: "#FF9E00",
+    notebookCellBorderColor: "#00CCAA"
+  },
+  "Laser Red": {
+    contrastBorder: "#FF073A",
+    sideBarBorder: "#FF073A",
+    focusBorder: "#00FFFF",
+    notebookCellBorderColor: "#C10029"
+  }
+};
+
+const ACCENTS = {
+  ...PLAIN_ACCENTS,
+  ...NEON_ACCENTS
 };
 
 async function applyAccent(accent, configTarget) {

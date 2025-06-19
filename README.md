@@ -21,7 +21,7 @@ To reset to the default accent, run the command `Reset Accent (Dark High Contras
 
 ## Accent Previews
 
-Below are previews of each accent in action using the **Dark High Contrast** theme.
+Below are previews of some accents in action using the **Dark High Contrast** theme.
 
 | Default | Emerald | Fuchsia |
 |--------|---------|---------|
@@ -35,7 +35,25 @@ Below are previews of each accent in action using the **Dark High Contrast** the
 |---------|------|--------|
 | ![](media/06-crimson.png) | ![](media/07-teal.png) | ![](media/08-golden.png) |
 
-| Lime | Cool Gray |
-|------|-----------|
-| ![](media/09-lime.png) | ![](media/10-cool.png) |
+### Full Accent List
 
+- Emerald Green
+- Fuchsia Pink
+- Tangerine Orange
+- Azure Blue
+- Lavender Purple
+- Crimson Red
+- Teal Blue
+- Golden Yellow
+- Lime Green
+- Cool Gray
+- Laser Lime
+- Bubblegum Pink
+- Electric Blue
+- Tangerine Flash
+- Cyber Grape
+- Strobe Yellow
+- Cyan Beam
+- Hot Magenta
+- Cyber Mint
+- Laser Red
